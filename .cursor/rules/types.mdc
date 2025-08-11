@@ -1,0 +1,12 @@
+---
+description: Type and schema conventions
+globs:
+  - src/types/**
+alwaysApply: false
+---
+
+- Types: export domain types from `src/types`; keep names descriptive and stable.
+- Schemas: keep JSON Schemas versioned by domain (`v1/`); mirror TS types where consumed by UI.
+- Nullability: prefer explicit `null` over `undefined` for data shapes crossing the wire, try to limit the use of `null` as much as possible.
+
+

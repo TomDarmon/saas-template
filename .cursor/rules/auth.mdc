@@ -1,0 +1,27 @@
+---
+description: Authentication and authorization with Better Auth and middleware
+globs:
+  - src/server/auth/**
+  - src/app/api/auth/**
+  - src/components/auth/**
+  - src/middleware.ts
+alwaysApply: false
+---
+
+- Auth server: use `auth` from `~/server/auth`; do not reimplement session logic.
+- Sessions: server via `getServerSession()`; client via `authClient`.
+- Flows: sign up/in/out via `authClient`; email verification and password reset via server emails.
+- Middleware: redirect unauthenticated to `/signin`; gate admin via `session.user.role === "admin"`.
+- Security: never log secrets; rate limits configured in auth options.
+- Emails: send via Resend in `~/server/auth/email`; templates live in `src/email-templates`.
+
+@src/server/auth/index.ts
+@src/server/auth/client.ts
+@src/server/auth/email.ts
+@src/app/api/auth/[...all]/route.ts
+@src/components/auth/signin-form.tsx
+@src/components/auth/signup-form.tsx
+@src/components/auth/forgot-password-form.tsx
+@src/components/auth/reset-password-form.tsx
+@src/middleware.ts
+

@@ -1,0 +1,24 @@
+---
+description: UI component structure and usage (primitives vs features, client boundaries)
+globs:
+  - src/components/**
+alwaysApply: false
+---
+
+- Primitives: `components/ui/*` are stateless, reusable, style-focused; no app logic.When needed add UI components using bunx --bun shadcn@latest add card 
+- Features: `components/auth/*`, `components/admin/*` compose primitives and call clients/hooks.
+- Client boundaries: add "use client" only when using state/effects/events or client libraries.
+- Props: type component props; keep components small and focused.
+- Styling: use Tailwind and `cn`; avoid inline styles.
+- Data: client components may use `authClient` or tRPC hooks; server data should be fetched in Server Components.
+- Files: kebab-case filenames; colocate minor subcomponents in same file.
+
+@src/components/ui/button.tsx
+@src/components/ui/card.tsx
+@src/components/ui/form.tsx
+@src/components/ui/input.tsx
+@src/components/ui/table.tsx
+@src/components/auth/signin-form.tsx
+@src/components/admin/users-table.tsx
+@src/lib/utils.ts
+

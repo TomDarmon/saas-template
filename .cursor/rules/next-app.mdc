@@ -1,0 +1,21 @@
+---
+description: Next.js App Router conventions (routing, middleware, server vs client components)
+globs:
+  - src/app/**
+  - src/middleware.ts
+alwaysApply: false
+---
+
+- Routing: colocate pages under `src/app`; avoid API route logic beyond bridging to auth/tRPC.
+- Server-first: pages and layouts are Server Components; mark feature UIs as client only when needed.
+- Session: fetch via `getServerSession()` in Server Components; avoid client session fetch unless necessary.
+- Middleware: gate auth routes via `src/middleware.ts`; redirect unauthenticated to `/signin`; check `session.user.role` for admin.
+- Navigation: use `next/link` and `redirect`; avoid imperative router unless client-only.
+- Error/logging: keep server logs minimal; surface user-facing errors with toasts.
+- Env: import from `~/env` in server code; never from `process.env`.
+
+@src/middleware.ts
+@src/app/page.tsx
+@src/app/dashboard/page.tsx
+@src/app/api/trpc/[trpc]/route.ts
+

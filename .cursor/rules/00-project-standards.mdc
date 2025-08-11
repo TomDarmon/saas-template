@@ -1,0 +1,18 @@
+---
+description: Project-wide standards for Next.js App Router + tRPC + Better Auth + Drizzle + Tailwind. Keep code minimal, typed, and consistent.
+alwaysApply: true
+---
+
+- Use bun to run the project and install dependencies.
+- Code style: explicit types for exports/public APIs; avoid any; prefer early returns; keep nesting shallow; use meaningful names.
+- Imports: use `~` alias for `src` imports; group std/lib/third-party/local; avoid deep `../../..` paths.
+- Env: read env via `~/env` only; do not access `process.env` outside `src/env.js` and build configs.
+- Routing: App Router only; put business logic in server/tRPC, not in route handlers/components.
+- Validation & errors: validate inputs with Zod; throw `TRPCError` on server; show concise toasts on client.
+- Auth: use `getServerSession` on server and `authClient` on client; guard with `protectedProcedure` and `src/middleware.ts`.
+- DB: use `db` from `~/server/db`; never access DB on the client.
+- UI: default to Server Components; add "use client" only when using state/effects/events.
+- Styling: use Tailwind and tokens from `styles/globals.css`; prefer primitives in `components/ui` and `cn` helper.
+- Emails: send via server (`~/server/auth/email`); keep templates pure in `src/email-templates`.
+- Adding features: define types + zod schema → add/extend tRPC procedure → build UI. Reuse a procedure when semantics match; create a new procedure when side-effects, ACL, or shape differ.
+

@@ -1,0 +1,16 @@
+---
+description: Hooks and utilities usage
+globs:
+  - src/hooks/**
+  - src/lib/**
+alwaysApply: false
+---
+
+- Hooks: prefix with `use`; client-only; encapsulate UI behaviors (e.g., `use-toast`).
+- Utilities: pure functions; no side effects or env/DOM access; reuse `cn` for class merging.
+- Validation helpers: colocate Zod schemas in `src/lib/zod.ts`; export types for reuse.
+
+@src/hooks/use-toast.ts
+@src/lib/utils.ts
+@src/lib/zod.ts
+

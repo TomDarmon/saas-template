@@ -1,0 +1,18 @@
+---
+description: Email template conventions (react-email + Resend)
+globs:
+  - src/email-templates/**
+  - src/server/auth/email.ts
+alwaysApply: false
+---
+
+- Templates: pure, stateless components receiving props (e.g., `inviteLink`).
+- Styling: Tailwind within react-email only; keep content accessible and concise.
+- Sending: render/send only on server via Resend; never from client.
+- Links: include full absolute URLs; mirror in text and button.
+
+@src/server/auth/email.ts
+@src/email-templates/verification-email.tsx
+@src/email-templates/reset-password-email.tsx
+@src/email-templates/change-email-verification.tsx
+

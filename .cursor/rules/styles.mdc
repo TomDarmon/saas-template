@@ -1,0 +1,18 @@
+---
+description: Styling conventions with Tailwind and design tokens
+globs:
+  - src/styles/**
+  - components.json
+  - postcss.config.cjs
+alwaysApply: false
+---
+
+- Tailwind-first: use utility classes; prefer semantic tokens defined in `globals.css`.
+- Variants: use CVA for complex components (see `button.tsx`).
+- Theming: respect light/dark tokens; do not hardcode colors; use CSS variables when needed.
+- Consistency: adhere to spacing/size scale; avoid ad-hoc arbitrary values if a token exists.
+- Global styles: keep base minimal; no component-specific CSS in globals.
+
+@src/styles/globals.css
+@src/components/ui/button.tsx
+

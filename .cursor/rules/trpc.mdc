@@ -1,0 +1,27 @@
+---
+description: tRPC patterns (router layout, procedure design, reuse vs new, context usage)
+globs:
+  - src/server/api/**
+  - src/trpc/**
+alwaysApply: false
+---
+
+- Routers: define under `src/server/api/routers`; register in `src/server/api/root.ts`.
+- Procedures: use `publicProcedure` for open data, `protectedProcedure` for authenticated actions; validate with Zod. If needed, create a new procedure for specific use cases (organizations, admin). But try to avoid creating new procedures unless necessary.
+- Context: access `ctx.db` and `ctx.session`; do not import `db` directly inside procedures.
+- Errors: throw `new TRPCError({ code, message })`; never return error-like objects.
+- Reuse vs new:
+  - Reuse: same resource + operation, only filters/pagination differ → extend params of existing procedure.
+  - New: different side-effects/ACL/output shape/latency concerns → create a new procedure.
+- Data shapes: keep stable output types; version at router or input schema level if necessary.
+- Server: use "api" from "src/trpc/server.ts" for server-side calls.
+- Client: use "api" from "src/trpc/react.tsx" for client-side calls.
+- Patterns: Leverage trpc features such as prefetch, invalidate, batching, when suitable.
+
+@src/server/api/trpc.ts
+@src/server/api/root.ts
+@src/server/api/routers/example.ts
+@src/app/api/trpc/[trpc]/route.ts
+@src/trpc/react.tsx
+@src/trpc/server.ts
+

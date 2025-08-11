@@ -1,0 +1,16 @@
+---
+description: Database access with Drizzle (schema, connections, usage)
+globs:
+  - src/server/db/**
+  - drizzle.config.ts
+alwaysApply: false
+---
+
+- Schema: define tables in `src/server/db/*/schema.ts`; keep columns typed and non-nullable where possible.
+- Connection: import `db` from `~/server/db`; connection is cached in dev.
+- Access: only in server code or tRPC context via `ctx.db`; never in client components.
+- Migrations: keep schema changes additive and backward compatible; coordinate with auth schema requirements.
+
+@src/server/db/index.ts
+@src/server/db/auth/schema.ts
+
