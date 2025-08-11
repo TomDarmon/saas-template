@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
-import { SquareKanban, UserCircle, Sparkles } from "lucide-react";
+import { SquareKanban, UserCircle, Sparkles, Settings } from "lucide-react";
 import { UserButton } from "@daveyplate/better-auth-ui";
 import {
   Sidebar,
@@ -43,6 +43,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     <Link href="/dashboard/profile"><UserCircle className="size-4" />Profile</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link href="/dashboard/settings"><Settings className="size-4" />Settings</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
                 {/* User actions handled by UserButton in header */}
               </SidebarMenu>
             </SidebarGroup>
@@ -60,7 +65,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               <span className="text-sm font-semibold">SaaS Template</span>
             </Link>
             <div className="ml-auto" />
-            <UserButton />
+            <UserButton size="icon" />
           </header>
           <main className="container mx-auto max-w-6xl flex-1 px-4 py-6">
             {children}
@@ -70,5 +75,3 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     </SidebarProvider>
   );
 }
-
-

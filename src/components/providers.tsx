@@ -18,12 +18,16 @@ export function Providers({ children }: ProvidersProps) {
       navigate={(path) => router.push(path)}
       replace={(path) => router.replace(path)}
       onSessionChange={() => router.refresh()}
+      settings={{
+        url: "/dashboard/settings",
+      }}
       Link={Link}
       viewPaths={{
-        SIGN_IN: "/api/auth/sign-in",
-        SIGN_UP: "/api/auth/sign-up",
-        FORGOT_PASSWORD: "/api/auth/email-verified",
-        RESET_PASSWORD: "/api/auth/forgot-password",
+        // Use path segments, not absolute paths
+        SIGN_IN: "signin",
+        SIGN_UP: "signup",
+        FORGOT_PASSWORD: "forgot-password",
+        RESET_PASSWORD: "reset-password",
       }}
     >
       {children}

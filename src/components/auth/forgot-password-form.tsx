@@ -43,7 +43,7 @@ export function ForgotPasswordForm({
     await authClient.forgetPassword(
       {
         email: values.email,
-        redirectTo: "/reset-password",
+        redirectTo: "/auth/resetpassword",
       },
       {
         onRequest: () => {

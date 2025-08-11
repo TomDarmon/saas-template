@@ -42,10 +42,10 @@ export default async function Home() {
               {!session ? (
                 <>
                   <Button asChild variant="ghost">
-                    <Link href="/signin">Sign in</Link>
+                    <Link href="/auth/signin">Sign in</Link>
                   </Button>
                   <Button asChild>
-                    <Link href="/signup">Get started</Link>
+                    <Link href="/auth/signup">Get started</Link>
                   </Button>
                 </>
               ) : (
@@ -78,12 +78,12 @@ export default async function Home() {
                 {!session ? (
                   <>
                     <Button asChild size="lg">
-                      <Link href="/signup">
+                      <Link href="/auth/sign-up">
                         Start free <ArrowRight className="ml-1 size-4" />
                       </Link>
                     </Button>
                     <Button asChild size="lg" variant="outline">
-                      <Link href="/signin">Sign in</Link>
+                      <Link href="/auth/sign-in">Sign in</Link>
                     </Button>
                   </>
                 ) : (
@@ -189,7 +189,7 @@ export default async function Home() {
                       ))}
                     </ul>
                     <Button className="w-full" variant={tier.name === "Pro" ? "default" : "outline"} asChild>
-                      <Link href={!session ? "/signup" : "/dashboard"}>
+                      <Link href={!session ? "/auth/sign-up" : "/dashboard"}>
                         {tier.name === "Starter" ? "Get started" : "Choose plan"}
                       </Link>
                     </Button>
@@ -252,10 +252,10 @@ export default async function Home() {
               {!session ? (
                 <>
                   <Button asChild size="lg">
-                    <Link href="/signup">Create account</Link>
+                    <Link href="/auth/sign-up">Create account</Link>
                   </Button>
                   <Button asChild size="lg" variant="outline">
-                    <Link href="/signin">Sign in</Link>
+                    <Link href="/auth/sign-in">Sign in</Link>
                   </Button>
                 </>
               ) : (
