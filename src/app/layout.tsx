@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 
 import { Toaster } from "sonner";
 import { TRPCReactProvider } from "~/trpc/react";
+import { Providers } from "~/components/providers";
 
 export const metadata: Metadata = {
   title: "SAAS template",
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-dvh bg-background text-foreground">
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <Providers>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </Providers>
         <Toaster />
       </body>
     </html>

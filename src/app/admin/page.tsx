@@ -1,4 +1,5 @@
 import UsersTable from "~/components/admin/users-table";
+import { SessionsCard } from "@daveyplate/better-auth-ui";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
@@ -17,6 +18,8 @@ export default async function AdminDashboard() {
         <Button>
           <Link href="/">Go back home</Link>
         </Button>
+
+        <SessionsCard />
 
         <Card>
           <CardHeader>

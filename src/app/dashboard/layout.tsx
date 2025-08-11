@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
-import { LogOut, Menu, Settings, SquareKanban, UserCircle, Sparkles } from "lucide-react";
-import { Button } from "~/components/ui/button";
+import { SquareKanban, UserCircle, Sparkles } from "lucide-react";
+import { UserButton } from "@daveyplate/better-auth-ui";
 import {
   Sidebar,
   SidebarHeader,
@@ -14,7 +14,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "~/components/ui/sidebar";
-import { SidebarSignOutButton } from "~/components/auth/sidebar-signout-button";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -44,14 +43,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     <Link href="/dashboard/profile"><UserCircle className="size-4" />Profile</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <Link href="/dashboard/settings"><Settings className="size-4" />Settings</Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarSignOutButton />
-                </SidebarMenuItem>
+                {/* User actions handled by UserButton in header */}
               </SidebarMenu>
             </SidebarGroup>
           </SidebarContent>
@@ -68,6 +60,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               <span className="text-sm font-semibold">SaaS Template</span>
             </Link>
             <div className="ml-auto" />
+            <UserButton />
           </header>
           <main className="container mx-auto max-w-6xl flex-1 px-4 py-6">
             {children}

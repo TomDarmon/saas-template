@@ -11,7 +11,6 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { getServerSession } from "~/server/auth";
 import { HydrateClient } from "~/trpc/server";
-import { TopnavSignOutButton } from "~/components/auth/topnav-signout-button";
 
 export default async function Home() {
   const session = await getServerSession();
@@ -51,7 +50,6 @@ export default async function Home() {
                 </>
               ) : (
                 <>
-                  <TopnavSignOutButton />
                   <Button asChild>
                     <Link href="/dashboard">Open dashboard</Link>
                   </Button>
