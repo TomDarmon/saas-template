@@ -1,6 +1,6 @@
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { openAPI, admin } from "better-auth/plugins";
+import { openAPI, admin, organization } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { cache } from "react";
 import { env } from "~/env";
@@ -20,6 +20,7 @@ export const auth = betterAuth({
     admin({
       impersonationSessionDuration: 60 * 60 * 24 * 7, // 7 days
     }),
+    organization(),
   ],
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days

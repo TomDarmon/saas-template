@@ -32,6 +32,10 @@ function isAdminRoute(pathname: string): boolean {
   return ADMIN_ROUTES.includes(pathname);
 }
 
+function isDashboardRoute(pathname: string): boolean {
+  return pathname.startsWith("/dashboard") || pathname.startsWith("/o/");
+}
+
 function redirectTo(url: string, request: NextRequest): NextResponse {
   return NextResponse.redirect(new URL(url, request.url));
 }
@@ -40,6 +44,7 @@ function handleUnauthenticatedUser(pathname: string, request: NextRequest): Next
   if (isPublicRoute(pathname)) {
     return NextResponse.next();
   }
+  // Redirect unauthenticated users trying to access protected routes to signin
   return redirectTo("/auth/signin", request);
 }
 

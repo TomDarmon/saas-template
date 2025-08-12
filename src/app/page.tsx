@@ -50,9 +50,9 @@ export default async function Home() {
                 </>
               ) : (
                 <>
-                  <Button asChild>
-                    <Link href="/dashboard">Open dashboard</Link>
-                  </Button>
+                   <Button asChild>
+                     <Link href="/dashboard">Open dashboard</Link>
+                   </Button>
                 </>
               )}
             </div>
@@ -88,7 +88,7 @@ export default async function Home() {
                   </>
                 ) : (
                   <Button asChild size="lg">
-                    <Link href="/dashboard">
+                     <Link href="/dashboard">
                       Go to dashboard <ArrowRight className="ml-1 size-4" />
                     </Link>
                   </Button>
@@ -189,7 +189,7 @@ export default async function Home() {
                       ))}
                     </ul>
                     <Button className="w-full" variant={tier.name === "Pro" ? "default" : "outline"} asChild>
-                      <Link href={!session ? "/auth/sign-up" : "/dashboard"}>
+                       <Link href={!session ? "/auth/sign-up" : "/dashboard"}>
                         {tier.name === "Starter" ? "Get started" : "Choose plan"}
                       </Link>
                     </Button>
@@ -260,7 +260,7 @@ export default async function Home() {
                 </>
               ) : (
                 <Button asChild size="lg">
-                  <Link href="/dashboard">Open dashboard</Link>
+                   <Link href="/dashboard">Open dashboard</Link>
                 </Button>
               )}
             </div>
