@@ -9,7 +9,7 @@ export const organization = pgTable("organization", {
   slug: text("slug").notNull().unique(),
   logo: text("logo"),
   metadata: text("metadata"), // JSON string
-  createdAt: timestamp("created_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
     () => new Date(),
   ),
@@ -25,7 +25,7 @@ export const member = pgTable("member", {
     .notNull()
     .references(() => organization.id),
   role: text("role").notNull(),
-  createdAt: timestamp("created_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
     () => new Date(),
   ),
@@ -44,7 +44,7 @@ export const invitation = pgTable("invitation", {
   role: text("role").notNull(),
   status: text("status").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
     () => new Date(),
   ),
@@ -57,7 +57,7 @@ export const team = pgTable("team", {
   organizationId: text("organization_id")
     .notNull()
     .references(() => organization.id),
-  createdAt: timestamp("created_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
     () => new Date(),
   ),
@@ -72,7 +72,7 @@ export const teamMember = pgTable("team_member", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id),
-  createdAt: timestamp("created_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // Relations

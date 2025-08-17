@@ -5,7 +5,7 @@ import * as React from "react"
 import { toast as sonnerToast } from "sonner"
 
 const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+const TOAST_REMOVE_DELAY = 5000
 
 type ToasterToast = {
   id: string
@@ -153,11 +153,13 @@ function toast({ title, description, variant = "default", ...props }: Toast) {
     sonnerToast.error(title, {
       description: description as string,
       id,
+      duration: 5000,
     })
   } else {
     sonnerToast(title, {
       description: description as string,
       id,
+      duration: 5000,
     })
   }
 

@@ -3,9 +3,23 @@ import { NextResponse, type NextRequest } from "next/server";
 import { env } from "~/env";
 import type { Session } from "~/server/auth";
 
-const ADMIN_ROUTES = ["/admin"];
-const PUBLIC_ROUTES = ["/", "/auth/signin", "/auth/signup"];
-const SIGN_OUT_ROUTE = "/auth/sign-out";
+function createRouteMatcher(patterns: string[]) {
+  return (request: NextRequest): boolean => {
+    const pathname = request.nextUrl.pathname;
+    return patterns.some(pattern => {
+      // Convert pattern to regex, handling wildcards
+      const regexPattern = pattern
+        .replace(/\*\*/g, '.*') // ** matches any path segments
+        .replace(/\*/g, '[^/]*') // * matches within a segment
+        .replace(/\(/g, '\\(')
+        .replace(/\)/g, '\\)')
+        .replace(/\\\.\\\*\\\)/g, '(/.*)?'); // Convert \(\.\*\) back to (/.*)?
+      
+      const regex = new RegExp(`^${regexPattern}$`);
+      return regex.test(pathname);
+    });
+  };
+}
 
 async function getSession(request: NextRequest): Promise<Session | null> {
   const { data: session } = await betterFetch<Session>(
@@ -20,58 +34,41 @@ async function getSession(request: NextRequest): Promise<Session | null> {
   return session;
 }
 
-function isAuthRoute(pathname: string): boolean {
-  return pathname.startsWith("/auth/");
-}
+async function protect(request: NextRequest): Promise<NextResponse | null> {
 
-function isPublicRoute(pathname: string): boolean {
-  return PUBLIC_ROUTES.includes(pathname) || isAuthRoute(pathname);
-}
-
-function isAdminRoute(pathname: string): boolean {
-  return ADMIN_ROUTES.includes(pathname);
-}
-
-function isDashboardRoute(pathname: string): boolean {
-  return pathname.startsWith("/dashboard") || pathname.startsWith("/o/");
-}
-
-function redirectTo(url: string, request: NextRequest): NextResponse {
-  return NextResponse.redirect(new URL(url, request.url));
-}
-
-function handleUnauthenticatedUser(pathname: string, request: NextRequest): NextResponse {
-  if (isPublicRoute(pathname)) {
-    return NextResponse.next();
+  const session = await getSession(request);
+  
+  if (!session) {
+    // Redirect unauthenticated users to landing page
+    return NextResponse.redirect(new URL("/", request.url));
   }
-  // Redirect unauthenticated users trying to access protected routes to signin
-  return redirectTo("/auth/signin", request);
-}
-
-function handleAuthenticatedUser(pathname: string, session: Session, request: NextRequest): NextResponse {
-  // Redirect authenticated users away from auth routes (except sign-out)
-  if (isAuthRoute(pathname) && pathname !== SIGN_OUT_ROUTE) {
-    return redirectTo("/dashboard", request);
-  }
-
+  
   // Admin route protection
-  if (isAdminRoute(pathname) && session.user.role !== "admin") {
-    console.log("User is not an admin");
-    return redirectTo("/", request);
+  if (isAdminRoute(request) && session.user.role !== "admin") {
+    console.log(`User ${session.user.id} is not an admin and tried to enter the admin page`);
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();
 }
 
+const isProtectedRoute = createRouteMatcher([
+  "/dashboard",
+  "/dashboard/*",
+]);
+
+const isAdminRoute = createRouteMatcher([
+  "/admin",
+  "/admin/*",
+]);
+
 export default async function authMiddleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const session = await getSession(request);
 
-  if (!session) {
-    return handleUnauthenticatedUser(pathname, request);
+  if (isProtectedRoute(request)) {
+    return protect(request);
   }
-
-  return handleAuthenticatedUser(pathname, session, request);
+  // User is authorized to access the route
+  return NextResponse.next();
 }
 
 export const config = {

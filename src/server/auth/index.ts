@@ -8,6 +8,7 @@ import {
   sendChangeEmailVerification,
   sendResetPasswordEmail,
   sendVerificationEmail,
+  sendInviteToOrganization
 } from "~/server/auth/email";
 import { db } from "~/server/db";
 
@@ -20,7 +21,20 @@ export const auth = betterAuth({
     admin({
       impersonationSessionDuration: 60 * 60 * 24 * 7, // 7 days
     }),
-    organization(),
+    organization(
+      {
+        async sendInvitationEmail(data) {
+          const inviteLink = `${env.BETTER_AUTH_URL}/api/auth/accept-invitation/${data.id}`
+          await sendInviteToOrganization({
+            email: data.email,
+            organizationSlug: data.organization.slug,
+            inviteLink,
+          }).catch((error) => {
+            console.error("sendInviteToOrganization Error: ", error);
+          });
+        }
+      }
+    ),
   ],
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days

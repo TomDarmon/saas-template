@@ -18,8 +18,10 @@ export function Providers({ children }: ProvidersProps) {
       navigate={(path) => router.push(path)}
       replace={(path) => router.replace(path)}
       onSessionChange={() => router.refresh()}
-      settings={{
-        url: "/dashboard/settings",
+      organization={{
+        logo: true,
+        pathMode: "slug",
+        basePath: "/dashboard/organization",
       }}
       Link={Link}
       viewPaths={{
@@ -28,6 +30,7 @@ export function Providers({ children }: ProvidersProps) {
         SIGN_UP: "signup",
         FORGOT_PASSWORD: "forgot-password",
         RESET_PASSWORD: "reset-password",
+        ACCEPT_INVITATION: "accept-invitation",
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 "use client";
-import { AuthCard } from "@daveyplate/better-auth-ui";
+import { AuthView } from "@daveyplate/better-auth-ui";
 import { usePathname } from "next/navigation";
 
 export default function EmailVerifiedPage() {
@@ -7,7 +7,7 @@ export default function EmailVerifiedPage() {
   return (
     <div className="flex grow flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        <AuthCard pathname={pathname} />
+        <AuthView pathname={pathname} />
       </div>
     </div>
   );

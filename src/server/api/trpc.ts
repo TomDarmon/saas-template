@@ -10,8 +10,10 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { auth } from "~/server/auth";
+import { eq, asc } from "drizzle-orm";
 
 import { db } from "~/server/db";
+import { member } from "~/server/db/auth/organization";
 
 /**
  * 1. CONTEXT
@@ -121,15 +123,39 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  */
 export const protectedProcedure = t.procedure
   .use(timingMiddleware)
-  .use(({ ctx, next }) => {
+  .use(async ({ ctx, next }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
 
+    // Fetch user organizations
+    const memberRecords = await db.query.member.findMany({
+      where: eq(member.userId, ctx.session.user.id),
+      with: {
+        organization: true,
+      },
+      orderBy: [asc(member.createdAt)],
+    });
+
+    if (!memberRecords) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Member does not have any organization. This should not happen as the user should have his personal space",
+      });
+    }
+
+    const organizations = memberRecords.map((memberRecord) => memberRecord.organization);
+
     return next({
       ctx: {
         // infers the `session` as non-nullable
-        session: { ...ctx.session, user: ctx.session.user },
+        session: { 
+          ...ctx.session, 
+          user: { 
+            ...ctx.session.user,
+            organizations,
+          },
+        },
       },
     });
   });

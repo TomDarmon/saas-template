@@ -4,6 +4,7 @@ import {
   ChangeEmailVerificationTemplate,
   ResetPasswordEmailTemplate,
   VerificationEmailTemplate,
+  InviteToOrganizationTemplate,
 } from "~/email-templates";
 import { env } from "~/env";
 
@@ -53,5 +54,22 @@ export const sendChangeEmailVerification = async ({
     to: [email],
     subject: "Reset Password Link",
     react: ChangeEmailVerificationTemplate({ inviteLink: verificationUrl }),
+  });
+};
+
+export const sendInviteToOrganization = async ({
+  email,
+  organizationSlug,
+  inviteLink,
+}: {
+  email: string;
+  inviteLink: string;
+  organizationSlug: string;
+}) => {
+  return await resend.emails.send({
+    from: env.EMAIL_FROM,
+    to: [email],
+    subject: "Invitation to Organization",
+    react: InviteToOrganizationTemplate({ inviteLink, organizationSlug }),
   });
 };
