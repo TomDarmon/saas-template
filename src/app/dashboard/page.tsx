@@ -1,21 +1,23 @@
 import { api } from "~/trpc/server";
-import { Button } from "~/components/ui/button";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
   const organizations = await api.auth.getOrganizationsList();
-  return <div>
-    <div className="mt-4">
-      <h2 className="mb-2 text-lg font-semibold">Organizations:</h2>
-      <div className="flex flex-col gap-2">
-        {organizations.map((organization) => (
-          <Button key={organization.id} asChild variant="outline">
-            <Link href={`/dashboard/organization/${organization.slug}`}>
-              {organization.name}
-            </Link>
-          </Button>
-        ))}
+  
+  // Redirect to the first organization if available
+  if (organizations.length > 0) {
+    redirect(`/dashboard/organization/${organizations[0]!.slug}`);
+  } else {
+    redirect("/onboarding");
+  }
+  
+  // If no organizations, show empty state
+  return (
+    <div className="container p-4 md:p-6">
+      <div className="text-center">
+        <h2 className="mb-2 text-lg font-semibold">No Organizations Found</h2>
+        <p className="text-muted-foreground">You don&apos;t have access to any organizations yet.</p>
       </div>
     </div>
-  </div>
+  );
 }

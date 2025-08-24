@@ -25,3 +25,56 @@
 	--color-warning: var(--warning);
 	--color-warning-foreground: var(--warning-foreground);
 }
+
+/* Better Auth UI Dark Mode Overrides */
+@layer components {
+	/* Ensure Better Auth UI forms respect dark mode */
+	.dark [data-better-auth-ui] {
+		color-scheme: dark;
+	}
+	
+	/* Override Better Auth UI input backgrounds in dark mode */
+	.dark [data-better-auth-ui] input,
+	.dark [data-better-auth-ui] textarea,
+	.dark [data-better-auth-ui] select {
+		background-color: var(--input);
+		border-color: var(--border);
+		color: var(--foreground);
+	}
+	
+	/* Override Better Auth UI button styles in dark mode */
+	.dark [data-better-auth-ui] button[type="submit"] {
+		background-color: var(--primary);
+		color: var(--primary-foreground);
+	}
+	
+	.dark [data-better-auth-ui] button[type="submit"]:hover {
+		background-color: var(--primary);
+		opacity: 0.9;
+	}
+	
+	/* Override Better Auth UI card/form backgrounds in dark mode */
+	.dark [data-better-auth-ui] .card,
+	.dark [data-better-auth-ui] form {
+		background-color: var(--card);
+		border-color: var(--border);
+		color: var(--card-foreground);
+	}
+	
+	/* Override Better Auth UI text colors in dark mode */
+	.dark [data-better-auth-ui] label,
+	.dark [data-better-auth-ui] p,
+	.dark [data-better-auth-ui] span {
+		color: var(--foreground);
+	}
+	
+	/* Override Better Auth UI link colors in dark mode */
+	.dark [data-better-auth-ui] a {
+		color: var(--primary);
+	}
+	
+	.dark [data-better-auth-ui] a:hover {
+		color: var(--primary);
+		opacity: 0.8;
+	}
+}

@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { Sparkles, Settings } from "lucide-react";
+import { Sparkles, Home } from "lucide-react";
 import { UserButton, OrganizationSwitcher } from "@daveyplate/better-auth-ui";
+import { ThemeToggle } from "~/components/ui/theme-toggle";
 import {
   Sidebar,
   SidebarHeader,
@@ -38,6 +39,7 @@ export default function DashboardLayout({
                 </div>
                 <span className="text-sm font-semibold">SaaS Template</span>
               </Link>
+              <ThemeToggle />
             </div>
             <div className="mt-4">
               <OrganizationSwitcher
@@ -46,6 +48,7 @@ export default function DashboardLayout({
                     router.push(`/dashboard/organization/${organization.slug}`)
                   } 
                 }}
+                hidePersonal={true}
               />
             </div>
           </SidebarHeader>
@@ -55,7 +58,7 @@ export default function DashboardLayout({
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <Link href="/dashboard/settings"><Settings className="size-4" />Settings</Link>
+                    <Link href="/dashboard"><Home className="size-4" />Home</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
@@ -70,7 +73,7 @@ export default function DashboardLayout({
           <header className="flex h-14 items-center gap-2 border-b px-4 md:hidden">
             <SidebarTrigger aria-label="Open menu" />
             <Link href="/dashboard" className="ml-2 flex items-center gap-2">
-              <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
+              <div className="flex size-8 items-center justify-center rounded-md text-primary-foreground">
                 <Sparkles className="size-4" />
               </div>
               <span className="text-sm font-semibold">SaaS Template</span>
@@ -84,5 +87,3 @@ export default function DashboardLayout({
     </SidebarProvider>
   );
 }
-
-
