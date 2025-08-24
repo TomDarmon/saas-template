@@ -45,6 +45,7 @@ export default function DashboardLayout({
               <OrganizationSwitcher
                 onSetActive={(organization) => {
                   if (organization) {
+                    // Navigate to the organization page
                     router.push(`/dashboard/organization/${organization.slug}`)
                   } 
                 }}

@@ -2,7 +2,7 @@
 
 import { AuthUIProvider } from "@daveyplate/better-auth-ui";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "~/server/auth/client";
 import { ThemeProvider } from "~/hooks/use-theme";
 
@@ -12,6 +12,13 @@ type ProvidersProps = {
 
 export function Providers({ children }: ProvidersProps) {
   const router = useRouter();
+  const pathname = usePathname();
+
+  // We provide the slug name to the auth context from the path given
+  // If a fake slug is given it will render a 404 and be redirected to the dashboard so this is safe
+  const slug = pathname?.startsWith("/dashboard/organization/")
+    ? pathname.split("/")[3]
+    : undefined;
 
   return (
     <ThemeProvider
@@ -28,6 +35,7 @@ export function Providers({ children }: ProvidersProps) {
           logo: true,
           pathMode: "slug",
           basePath: "/dashboard/organization",
+          slug,
         }}
         // @ts-expect-error Path of better-auth-ui is not compatible with Next.js 15
         Link={Link}

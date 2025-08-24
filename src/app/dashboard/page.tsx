@@ -1,10 +1,9 @@
-import { api } from "~/trpc/server";
 import { redirect } from "next/navigation";
+import { api } from "~/trpc/server";
 
 export default async function DashboardPage() {
   const organizations = await api.auth.getOrganizationsList();
-  
-  // Redirect to the first organization if available
+  // Redirect to the first organization if available and set the active organization for the session
   if (organizations.length > 0) {
     redirect(`/dashboard/organization/${organizations[0]!.slug}`);
   } else {
